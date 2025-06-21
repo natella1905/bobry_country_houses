@@ -1,113 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Домики - Bobry Country Houses</title>
+    <title>Аренда домиков — Bobry Country Houses</title>
+    <meta name="description" content="Аренда уютных домиков в Bobry Country Houses с удобным бронированием, фотографиями и полным описанием услуг.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <!-- NAVBAR -->
-    <div class="container">
-        <nav class="navbar">
-            <a class="logo" href="index.html">Bobry Country Houses</a>
-            <input type="checkbox" id="check">
-            <label for="check">
-                <i class="fas fa-bars" id="open"></i>
-                <i class="fas fa-times" id="close"></i>
-            </label>
-            <ul class="nav-list">
-                <li class="nav-item"><a href="rooms.html" class="nav-link">Домики</a></li>
-                <li class="nav-item"><a href="spa.html" class="nav-link">Фотографии</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">Услуги</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link">Контакты</a></li>
-                <li class="nav-item"><a href="tel:+79214060607" target="_blank" class="nav-link book-btn">Позвонить</a></li>
-            </ul>
-        </nav>
+<!-- NAVBAR -->
+<div class="container">
+    <nav class="navbar">
+        <a class="logo" href="index.html">Bobry Country Houses</a>
+        <input type="checkbox" id="check">
+        <label for="check">
+            <i class="fas fa-bars" id="open"></i>
+            <i class="fas fa-times" id="close"></i>
+        </label>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="rooms.html" class="nav-link">Домики</a></li>
+            <li class="nav-item"><a href="spa.html" class="nav-link">Фотографии</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">Услуги</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Контакты</a></li>
+            <li class="nav-item"><a href="tel:+79214060607" target="_blank" class="nav-link book-btn">Позвонить</a></li>
+        </ul>
+    </nav>
+</div>
 
+<!-- ROOMS LIST -->
+<section id="rooms-list" class="rooms-list">
+    <div class="container container-medium">
+        <div id="hr-widget"></div>
+        <script type="module" src="https://homereserve.ru/widget.js"></script>
+        <script type="module">
+            window.homereserve.initWidgetList({"token":"gDleLbdhMC"})
+        </script>
     </div>
+</section>
 
-    <!-- ROOMS LIST -->
-    <section id="rooms-list" class="rooms-list">
-        <div class="container container-medium">
-            <div id="hr-widget"></div>
-            <script type="module" src="https://homereserve.ru/widget.js"></script>
-            <script type="module">
-                window.homereserve.initWidgetList({"token":"gDleLbdhMC"})
-            </script>
+<!-- FOOTER SECTION -->
+<footer>
+    <div class="container">
+        <div class="back-to-top">
+            <a href="#rooms-list" aria-label="Наверх"><i class="fas fa-chevron-up"></i></a>
         </div>
-    </section>
-
-    <!-- FOOTER SECTION -->
-    <footer>
-        <div class="container">
-            <div class="back-to-top">
-                <a href="#rooms-list"><i class="fas fa-chevron-up"></i></a>
-            </div>
-            <div class="footer__content row">
-                <div class="col-3">
-                    <h4>О нас</h4>
-                    <p>Время заезда 15:00</br>
-                        Время отъезда 13:00</p>
-                </div>
-                <div class="col-3">
-                    <h4>Способы оплаты</h4>
-                    <p>Pay any way you choose, we support all payment options</p>
-                    <ul class="payment-methods">
-                        <li>
-                            <a href="#">
-                                <i class="fab fa-paypal"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fab fa-cc-visa"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fab fa-cc-mastercard"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fab fa-apple-pay"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-3">
-                    <h4>Мы в соцсетях</h4>
-                    <p>Follow us on social media and keep in touch with La Hotel.</p>
-                    <ul class="social-icons">
-                        <li>
-                            <a href="#">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fab fa-tripadvisor"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div class="footer__content row">
+            <section class="col-3">
+                <h4>О нас</h4>
+                <p>Время заезда 15:00<br>
+                    Время отъезда 13:00</p>
+            </section>
+            <section class="col-3">
+                <h4>Способы оплаты</h4>
+                <p>Оплачивайте любым удобным способом — мы поддерживаем все варианты оплаты</p>
+                <ul class="payment-methods">
+                    <li><a href="#" aria-label="PayPal"><i class="fab fa-paypal"></i></a></li>
+                    <li><a href="#" aria-label="Visa"><i class="fab fa-cc-visa"></i></a></li>
+                    <li><a href="#" aria-label="MasterCard"><i class="fab fa-cc-mastercard"></i></a></li>
+                    <li><a href="#" aria-label="Apple Pay"><i class="fab fa-apple-pay"></i></a></li>
+                </ul>
+            </section>
+            <section class="col-3">
+                <h4>Мы в соцсетях</h4>
+                <p>Следите за новостями и оставайтесь на связи с Bobry Country Houses.</p>
+                <ul class="social-icons">
+                    <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#" aria-label="Tripadvisor"><i class="fab fa-tripadvisor"></i></a></li>
+                </ul>
+            </section>
         </div>
-    </footer>
+    </div>
+</footer>
 </body>
 
 </html>

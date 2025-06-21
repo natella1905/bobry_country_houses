@@ -723,6 +723,11 @@ textarea {
     font-size: 4rem;
 }
 
+.section-spa .fa-spa,
+.our-menu .fa-campground {
+    font-size: 4rem;
+}
+
 .button-container {
     text-align: center;
     padding: 10rem 0;
