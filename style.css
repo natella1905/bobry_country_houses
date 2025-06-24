@@ -889,4 +889,32 @@ textarea {
     }
 }
 
+#hr-widget * {
+    color: #222 !important;
+}
 
+#hr-widget .hotel-detail-info__description {
+    color: #222 !important;
+}
+
+#hr-widget .hotel-info__title,
+#hr-widget .hotel-detail-info__description,
+#hr-widget .hotel-info[data-v-badbf05] *,
+#hr-widget [data-v-badbf05] {
+    color: #222 !important;
+}
+
+body #hr-widget [data-v-badbf05],
+body #hr-widget [data-v-badbf05] *,
+body #hr-widget .hotel-info__title,
+body #hr-widget .hotel-detail-info__description {
+    color: #222 !important;
+}
+body #app .hotel-detail-info__description p,
+body #app .hotel-detail-info__description * {
+    color: #222 !important;
+}
+body #app .hotel-detail-info__description p {
+    color: #222 !important;
+    font-weight: 400 !important;
+}

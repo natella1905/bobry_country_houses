@@ -57,6 +57,19 @@
         <script type="module">
             window.homereserve.initWidgetList({"token":"gDleLbdhMC"})
         </script>
+        <script>
+            const waitForText = setInterval(() => {
+                const elems = document.querySelectorAll('.hotel-detail-info__description p');
+                if (elems.length > 0) {
+                    elems.forEach(p => {
+                        p.style.color = '#222';
+                    });
+                    clearInterval(waitForText);
+                }
+            }, 300);
+        </script>
+
+
     </div>
 </section>
 
