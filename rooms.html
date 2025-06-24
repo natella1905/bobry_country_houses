@@ -57,19 +57,6 @@
         <script type="module">
             window.homereserve.initWidgetList({"token":"gDleLbdhMC"})
         </script>
-        <script>
-            const waitForText = setInterval(() => {
-                const elems = document.querySelectorAll('.hotel-detail-info__description p');
-                if (elems.length > 0) {
-                    elems.forEach(p => {
-                        p.style.color = '#222';
-                    });
-                    clearInterval(waitForText);
-                }
-            }, 300);
-        </script>
-
-
     </div>
 </section>
 
@@ -140,6 +127,31 @@
         </div>
     </div>
 </footer>
-</body>
+<script>
+    (function () {
+        const applyTextFix = () => {
+            const paragraphs = document.querySelectorAll('.hotel-detail-info__description p');
+            paragraphs.forEach(el => {
+                el.style.color = '#222';
+            });
+        };
 
+        const observer = new MutationObserver(() => {
+            applyTextFix();
+        });
+
+        const startObserver = () => {
+            const target = document.querySelector('#hr-widget');
+            if (target) {
+                observer.observe(target, { childList: true, subtree: true });
+                applyTextFix();
+            } else {
+                setTimeout(startObserver, 300);
+            }
+        };
+
+        startObserver(); // без ожидания DOMContentLoaded
+    })();
+</script>
+</body>
 </html>
