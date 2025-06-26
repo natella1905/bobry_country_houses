@@ -58,15 +58,19 @@
                 <iframe
                         id="hr-widget-iframe"
                         src="iframe.html"
-                        style="
-    width: 100%;
-    min-height: 300px;
-    border: none;
-    transition: height 0.3s ease;
-    position: relative;
-    z-index: 9999;
-  "
+                        style="width: 100%; min-height: 300px; border: none; transition: height 0.3s ease;"
+                        scrolling="no"
                 ></iframe>
+
+                <script>
+                    window.addEventListener("message", (event) => {
+                        if (event.data?.type === "hr-widget-resize" && typeof event.data.height === "number") {
+                            const iframe = document.getElementById("hr-widget-iframe");
+                            iframe.style.height = (event.data.height + 400) + "px"; // + запас на выпадание календаря
+                        }
+                    });
+                </script>
+
 
                 <div class="hero__text-box">
                     <h1 class="hero__text">
@@ -78,20 +82,6 @@
             </div>
         </div>
     </header>
-
-
-    <script>
-        window.addEventListener("message", (event) => {
-            if (event.data?.type === "hr-widget-resize") {
-                const iframe = document.getElementById("hr-widget-iframe");
-                if (iframe && event.data.height > 100) {
-                    // Добавляем запас, чтобы не обрезало dropdown, календарь и т.д.
-                    iframe.style.height = (event.data.height + 400) + "px";
-                }
-            }
-        });
-
-    </script>
 
 
     <main>

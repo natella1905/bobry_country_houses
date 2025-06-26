@@ -2,13 +2,13 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>HR Widget Embed</title>
+  <title>Widget</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
+      overflow: hidden;
     }
   </style>
 </head>
@@ -17,29 +17,22 @@
 
 <script type="module" src="https://homereserve.ru/widget.js"></script>
 <script type="module">
-  const run = () => {
+  const init = () => {
     if (window.homereserve?.initWidgetSearch) {
       window.homereserve.initWidgetSearch({
         token: "gDleLbdhMC",
         container: "#hr-widget"
       });
     } else {
-      setTimeout(run, 200);
+      setTimeout(init, 200);
     }
   };
-
-  run();
-  window.addEventListener("hashchange", () => setTimeout(run, 100));
+  init();
 </script>
 
 <script>
   function postHeight() {
-    const height = Math.max(
-            document.body.scrollHeight,
-            document.body.offsetHeight,
-            document.documentElement.scrollHeight,
-            document.documentElement.offsetHeight
-    );
+    const height = document.documentElement.scrollHeight;
     parent.postMessage({ type: 'hr-widget-resize', height }, '*');
   }
 
@@ -49,9 +42,10 @@
 
   window.addEventListener('load', postHeight);
   window.addEventListener('DOMContentLoaded', postHeight);
+  window.addEventListener('resize', postHeight);
   window.addEventListener('hashchange', () => setTimeout(postHeight, 200));
   document.addEventListener('click', () => setTimeout(postHeight, 300));
-  setInterval(postHeight, 1000); // костыль на всякий
+  setInterval(postHeight, 800); // страховка
 </script>
 </body>
 </html>
