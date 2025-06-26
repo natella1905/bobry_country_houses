@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>HR Widget Embed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="hr-widget"></div>
+
+  <script type="module" src="https://homereserve.ru/widget.js"></script>
+  <script type="module">
+    const run = () => {
+      if (window.homereserve?.initWidgetSearch) {
+        window.homereserve.initWidgetSearch({
+          token: "gDleLbdhMC",
+          container: "#hr-widget"
+        });
+      } else {
+        setTimeout(run, 200);
+      }
+    };
+
+    window.addEventListener("DOMContentLoaded", run);
+    window.addEventListener("hashchange", () => {
+      setTimeout(run, 100);
+    });
+  </script>
+</body>
+</html>
