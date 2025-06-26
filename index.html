@@ -116,29 +116,26 @@
                     </h1>
                     <a class="btn btn-green" onclick="openWidget()">Забронировать домик</a>
                 </div>
-
-                <div id="widget-overlay">
-                    <div id="widget-container">
-                        <div id="close-widget" onclick="closeWidget()">×</div>
-                        <iframe src="iframe.html" id="widget-iframe" allowfullscreen></iframe>
-                    </div>
-                </div>
-
-                <script>
-                    function openWidget() {
-                        document.getElementById('widget-overlay').style.display = 'flex';
-                    }
-
-                    function closeWidget() {
-                        document.getElementById('widget-overlay').style.display = 'none';
-                    }
-                </script>
-
-
             </div>
         </div>
     </header>
 
+    <div id="widget-overlay">
+        <div id="widget-container">
+            <div id="close-widget" onclick="closeWidget()">×</div>
+            <iframe src="iframe.html" id="widget-iframe" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        function openWidget() {
+            document.getElementById('widget-overlay').style.display = 'flex';
+        }
+
+        function closeWidget() {
+            document.getElementById('widget-overlay').style.display = 'none';
+        }
+    </script>
 
     <main>
         <!-- INFO SECTION -->
