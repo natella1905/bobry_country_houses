@@ -5,32 +5,53 @@
   <title>HR Widget Embed</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
   </style>
 </head>
 <body>
-  <div id="hr-widget"></div>
+<div id="hr-widget"></div>
 
-  <script type="module" src="https://homereserve.ru/widget.js"></script>
-  <script type="module">
-    const run = () => {
-      if (window.homereserve?.initWidgetSearch) {
-        window.homereserve.initWidgetSearch({
-          token: "gDleLbdhMC",
-          container: "#hr-widget"
-        });
-      } else {
-        setTimeout(run, 200);
-      }
-    };
+<script type="module" src="https://homereserve.ru/widget.js"></script>
+<script type="module">
+  const run = () => {
+    if (window.homereserve?.initWidgetSearch) {
+      window.homereserve.initWidgetSearch({
+        token: "gDleLbdhMC",
+        container: "#hr-widget"
+      });
+    } else {
+      setTimeout(run, 200);
+    }
+  };
 
-    window.addEventListener("DOMContentLoaded", run);
-    window.addEventListener("hashchange", () => {
-      setTimeout(run, 100);
-    });
-  </script>
+  run();
+  window.addEventListener("hashchange", () => setTimeout(run, 100));
+</script>
+
+<script>
+  function postHeight() {
+    const height = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+    );
+    parent.postMessage({ type: 'hr-widget-resize', height }, '*');
+  }
+
+  const observer = new ResizeObserver(postHeight);
+  observer.observe(document.body);
+  observer.observe(document.getElementById('hr-widget'));
+
+  window.addEventListener('load', postHeight);
+  window.addEventListener('DOMContentLoaded', postHeight);
+  window.addEventListener('hashchange', () => setTimeout(postHeight, 200));
+  document.addEventListener('click', () => setTimeout(postHeight, 300));
+  setInterval(postHeight, 1000); // костыль на всякий
+</script>
 </body>
 </html>
