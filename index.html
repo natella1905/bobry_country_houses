@@ -30,6 +30,60 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        #widget-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        #widget-container {
+            width: 90%;
+            height: 90%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        #widget-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #close-widget {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 22px;
+            cursor: pointer;
+            background: #fff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            z-index: 10000;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -55,30 +109,32 @@
         </div>
         <div id="hero" class="hero">
             <div class="container">
-                <iframe
-                        id="hr-widget-iframe"
-                        src="iframe.html"
-                        style="width: 100%; min-height: 300px; border: none; transition: height 0.3s ease;"
-                        scrolling="no"
-                ></iframe>
-
-                <script>
-                    window.addEventListener("message", (event) => {
-                        if (event.data?.type === "hr-widget-resize" && typeof event.data.height === "number") {
-                            const iframe = document.getElementById("hr-widget-iframe");
-                            iframe.style.height = (event.data.height + 400) + "px"; // + запас на выпадание календаря
-                        }
-                    });
-                </script>
-
-
                 <div class="hero__text-box">
                     <h1 class="hero__text">
                         <span class="hero__text-top">Коттеджи</span>
                         <span class="hero__text-bottom">на Ладоге</span>
                     </h1>
-                    <a class="btn btn-green" href="rooms.html" >Забронировать домик</a>
+                    <a class="btn btn-green" onclick="openWidget()">Забронировать домик</a>
                 </div>
+
+                <div id="widget-overlay">
+                    <div id="widget-container">
+                        <div id="close-widget" onclick="closeWidget()">×</div>
+                        <iframe src="iframe.html" id="widget-iframe" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <script>
+                    function openWidget() {
+                        document.getElementById('widget-overlay').style.display = 'flex';
+                    }
+
+                    function closeWidget() {
+                        document.getElementById('widget-overlay').style.display = 'none';
+                    }
+                </script>
+
+
             </div>
         </div>
     </header>
