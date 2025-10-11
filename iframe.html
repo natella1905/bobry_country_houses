@@ -1,51 +1,105 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Widget</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Ускоряем загрузку скрипта виджета -->
+  <link rel="preconnect" href="https://homereserve.ru" crossorigin>
+  <link rel="dns-prefetch" href="//homereserve.ru">
+
+  <!-- КРИТИЧЕСКИЙ CSS: светлая тема и чёрный текст до любых скриптов -->
   <style>
+    :root { color-scheme: light; } /* отключает авто-дарк у браузера */
     html, body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
+      background: #fff; color: #111; /* базовый чёрный текст */
       overflow: hidden;
     }
+    /* Жёсткая страховка против "белого" текста (включая Safari) */
+    #hr-widget, #hr-widget * {
+      color: #111 !important;
+      -webkit-text-fill-color: #111 !important;
+      mix-blend-mode: normal !important;
+    }
+    /* Анти-мигание: показываем только после монтирования */
+    body { opacity: 0; transition: opacity .15s ease; }
+    body.ready { opacity: 1; }
   </style>
+
+  <!-- (не обязательно) внешний CSS, если нужен — можно добавить тут -->
+  <!-- <link rel="preload" as="style" href="/css/iframe.css" onload="this.rel='stylesheet'"> -->
+  <!-- <noscript><link rel="stylesheet" href="/css/iframe.css"></noscript> -->
 </head>
 <body>
 <div id="hr-widget"></div>
 
+<!-- Скрипт виджета -->
 <script type="module" src="https://homereserve.ru/widget.js"></script>
+
+<script>
+  // Высота в родителя
+  function postHeight() {
+    const h = Math.max(
+            document.documentElement.scrollHeight,
+            document.body.scrollHeight,
+            document.documentElement.offsetHeight
+    );
+    parent.postMessage({ type: 'hr-widget-resize', height: h }, '*');
+  }
+  const ro = new ResizeObserver(postHeight);
+  ro.observe(document.documentElement);
+  ro.observe(document.body);
+  const hrRoot = document.getElementById('hr-widget');
+  const ro2 = new ResizeObserver(postHeight);
+  ro2.observe(hrRoot);
+
+  ['load','resize','orientationchange'].forEach(ev =>
+          window.addEventListener(ev, () => setTimeout(postHeight, 50))
+  );
+  document.addEventListener('click', () => setTimeout(postHeight, 150));
+  setInterval(postHeight, 800); // страховка
+</script>
+
 <script type="module">
-  const init = () => {
+  // Дожидаемся готовности CSSOM на странице iframe
+  function cssReady() {
+    // у нас критический CSS инлайном — он уже применён
+    return Promise.resolve();
+  }
+
+  // Инициализация строго после готовности CSS и загрузки api
+  const mountWidget = () => {
     if (window.homereserve?.initWidgetSearch) {
       window.homereserve.initWidgetSearch({
         token: "gDleLbdhMC",
         container: "#hr-widget"
       });
+
+      // Как только в контейнер приехал контент — показываем тело
+      const obs = new MutationObserver(() => {
+        if (document.getElementById('hr-widget').children.length) {
+          document.body.classList.add('ready');
+          // Двойной кадр для уверенного пересчёта высоты
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            const ev = new Event('resize');
+            window.dispatchEvent(ev);
+          }));
+          obs.disconnect();
+        }
+      });
+      obs.observe(document.getElementById('hr-widget'), { childList: true, subtree: true });
     } else {
-      setTimeout(init, 200);
+      // ждём api, если не успело подгрузиться
+      setTimeout(mountWidget, 120);
     }
   };
-  init();
-</script>
 
-<script>
-  function postHeight() {
-    const height = document.documentElement.scrollHeight;
-    parent.postMessage({ type: 'hr-widget-resize', height }, '*');
-  }
-
-  const observer = new ResizeObserver(postHeight);
-  observer.observe(document.body);
-  observer.observe(document.getElementById('hr-widget'));
-
-  window.addEventListener('load', postHeight);
-  window.addEventListener('DOMContentLoaded', postHeight);
-  window.addEventListener('resize', postHeight);
-  window.addEventListener('hashchange', () => setTimeout(postHeight, 200));
-  document.addEventListener('click', () => setTimeout(postHeight, 300));
-  setInterval(postHeight, 800); // страховка
+  (async () => {
+    await cssReady();
+    // небольшой тик на раскладку
+    requestAnimationFrame(mountWidget);
+  })();
 </script>
 </body>
 </html>
